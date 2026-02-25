@@ -1,0 +1,53 @@
+[
+  {
+    "title": "default"
+  },
+  {
+    "attributes": [
+      {
+        "tone": [
+          { "id": "1", "name": "Neutro", "description": "", "color": "#64748b" },
+          { "id": "2", "name": "Positivo", "description": "", "color": "#10b981" },
+          { "id": "3", "name": "Negativo", "description": "", "color": "#ef4444" },
+          { "id": "1769610082635", "name": "tonaso", "description": "", "color": "#8b5cf6" }
+        ]
+      },
+      {
+        "type_of_discourse": [
+          { "id": "1", "name": "Literal", "description": "", "color": "#3b82f6" },
+          { "id": "2", "name": "Irónico", "description": "", "color": "#f59e0b" }
+        ]
+      }
+    ]
+  },
+  {
+    "categories": [
+      {
+        "id": "1",
+        "name": "Preguntas Introductorias (Personales y del hogar)",
+        "color": "#d946ef",
+        "subCategories": [
+          { "id": "1", "name": "Perfil demografico", "color": "#06b6d4" },
+          { "id": "2", "name": "Perfil educativo", "color": "#10b981" },
+          { "id": "3", "name": "Perfil laboral", "color": "#f97316" },
+          { "id": "4", "name": "Estructura familiar", "color": "#f43f5e" },
+          { "id": "5", "name": "Situación habitacional", "color": "#84cc16" }
+        ]
+      },
+      {
+        "id": "2",
+        "name": "Arraigo al lugar e identidad",
+        "color": "#6366f1",
+        "subCategories": [
+          { "id": "1", "name": "Residencia y origen", "color": "#14b8a6" },
+          { "id": "2", "name": "definicion hogar", "color": "#ec4899" }
+        ]
+      },
+      { "id": "3", "name": "Estrategias de los hogares", "color": "#a855f7", "subCategories": [] },
+      { "id": "4", "name": "Trayectorias Migratorias", "color": "#eab308", "subCategories": [] },
+      { "id": "5", "name": "Movilidades de futuro", "color": "#22c55e", "subCategories": [] },
+      { "id": "6", "name": "Impactos de la migración", "color": "#3b82f6", "subCategories": [] },
+      { "id": "7", "name": "Transformaciones con y tras la pandemia", "color": "#f43f5e", "subCategories": [] }
+    ]
+  }
+]

@@ -1,0 +1,62 @@
+{
+  "1": {
+    "line": "E_1: ¿Cómo se encuentra hoy?",
+    "Interviewer": true,
+    "attributes": [],
+    "categories": []
+  },
+  "2": {
+    "line": "I_1: Bien, un poco cansado, pero bien en general.",
+    "Interviewer": false,
+    "attributes": [],
+    "categories": []
+  },
+  "3": {
+    "line": "E_2: ¿Seguro? Lo noto algo tenso.",
+    "Interviewer": true,
+    "attributes": [],
+    "categories": []
+  },
+  "4": {
+    "line": "I_2: Sí, bastante seguro. Ha sido una semana larga, nada más.",
+    "Interviewer": false,
+    "attributes": [],
+    "categories": []
+  },
+  "5": {
+    "line": "E_3: ¿Hay algo en particular que le haya afectado últimamente?",
+    "Interviewer": true,
+    "attributes": [],
+    "categories": []
+  },
+  "6": {
+    "line": "I_3: El trabajo, sobre todo. Mucha presión y poco descanso.",
+    "Interviewer": false,
+    "attributes": [],
+    "categories": []
+  },
+  "7": {
+    "line": "E_4: ¿Cómo suele manejar ese tipo de situaciones?",
+    "Interviewer": true,
+    "attributes": [],
+    "categories": []
+  },
+  "8": {
+    "line": "I_4: Intento mantener la calma y organizarme mejor, aunque no siempre es fácil.",
+    "Interviewer": false,
+    "attributes": [],
+    "categories": []
+  },
+  "9": {
+    "line": "E_5: ¿Diría que ahora mismo se siente satisfecho con su situación?",
+    "Interviewer": true,
+    "attributes": [],
+    "categories": []
+  },
+  "10": {
+    "line": "I_5: En parte sí, pero sé que todavía hay cosas que debo mejorar.",
+    "Interviewer": false,
+    "attributes": [],
+    "categories": []
+  }
+}

@@ -1,0 +1,49 @@
+[
+  {
+    "title": "RE-PLACE"
+  },
+  {
+    "attributes": [
+      {
+        "TONO": [
+          {
+            "id": "1772020223610",
+            "name": "POSITIVO",
+            "description": "",
+            "color": "#00d4ff"
+          },
+          {
+            "id": "1772020229850",
+            "name": "NEGATIVO",
+            "description": "",
+            "color": "#00d4ff"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "categories": [
+      {
+        "id": "1772020240337",
+        "name": "PANDEMIA",
+        "color": "#ff00ff",
+        "description": "",
+        "subCategories": [
+          {
+            "id": "1772020544577",
+            "name": "EMOCIONES PANDEMIA",
+            "color": "#00ffaa",
+            "description": ""
+          },
+          {
+            "id": "1772020561104",
+            "name": "TRAYECTO PANDEMIA",
+            "color": "#ff00dd",
+            "description": ""
+          }
+        ]
+      }
+    ]
+  }
+]

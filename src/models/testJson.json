@@ -1,0 +1,62 @@
+[
+  {
+    "title": "mis_tags",
+    "description": ""
+  },
+  {
+    "attributes": [
+      {
+        "Tonito": [
+          {
+            "id": "1771515900177",
+            "name": "Neutro",
+            "description": "",
+            "color": "#dd1172"
+          }
+        ]
+      },
+      {
+        "Discurso": [
+          {
+            "id": "1771515922546",
+            "name": "Discursito",
+            "description": "",
+            "color": "#07e718"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "categories": [
+      {
+        "id": "1771515947830",
+        "name": "Mentirosa",
+        "color": "#ff80c0",
+        "description": "",
+        "subCategories": [
+          {
+            "id": "1771515957740",
+            "name": "subsistencia",
+            "color": "#859636",
+            "description": ""
+          }
+        ]
+      },
+      {
+        "id": "1771515961298",
+        "name": "Hombres",
+        "color": "#6366f1",
+        "description": "",
+        "subCategories": [
+          {
+            "id": "1771515964256",
+            "name": "Valientes",
+            "color": "#14b8a6",
+            "description": ""
+          }
+        ]
+      }
+    ]
+  }
+]

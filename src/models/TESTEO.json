@@ -1,0 +1,44 @@
+[
+  {
+    "title": "TESTEO"
+  },
+  {
+    "attributes": [
+      {
+        "grupito": []
+      }
+    ]
+  },
+  {
+    "categories": [
+      {
+        "id": "1771940116755",
+        "name": "Categoria",
+        "color": "#ff00ff",
+        "description": "",
+        "subCategories": [
+          {
+            "id": "1771940134236",
+            "name": "subcas",
+            "color": "#00ffaa",
+            "description": ""
+          }
+        ]
+      },
+      {
+        "id": "1771940127322",
+        "name": "Intenciones",
+        "color": "#ff00ff",
+        "description": "",
+        "subCategories": [
+          {
+            "id": "1771940142099",
+            "name": "subis",
+            "color": "#ff00ea",
+            "description": ""
+          }
+        ]
+      }
+    ]
+  }
+]

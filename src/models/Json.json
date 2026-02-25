@@ -1,0 +1,28 @@
+[
+  {
+    "title": "Json"
+  },
+  {
+    "attributes": [
+      {
+        "Atributillo": [
+          {
+            "id": "1771938721692",
+            "name": "Valoraso",
+            "description": "",
+            "color": "#d4ff00"
+          },
+          {
+            "id": "1771938726068",
+            "name": "Titillo",
+            "description": "",
+            "color": "#00d4ff"
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "categories": []
+  }
+]

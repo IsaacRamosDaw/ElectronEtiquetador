@@ -1,0 +1,36 @@
+[
+  {
+    "title": "nuevaso"
+  },
+  {
+    "attributes": [
+      {
+        "atributillo": []
+      }
+    ]
+  },
+  {
+    "categories": [
+      {
+        "id": "1771939615879",
+        "name": "Categoria",
+        "color": "#ff00ff",
+        "description": "",
+        "subCategories": [
+          {
+            "id": "1771939622536",
+            "name": "categorasa",
+            "color": "#ff00ff",
+            "description": ""
+          },
+          {
+            "id": "1771939638032",
+            "name": "subcategorasa",
+            "color": "#ff00ff",
+            "description": ""
+          }
+        ]
+      }
+    ]
+  }
+]
