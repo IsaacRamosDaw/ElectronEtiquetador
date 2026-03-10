@@ -5,18 +5,119 @@
   {
     "attributes": [
       {
-        "tone": [
-          { "id": "1", "name": "Neutro", "description": "", "color": "#64748b" },
-          { "id": "2", "name": "Positivo", "description": "", "color": "#10b981" },
-          { "id": "3", "name": "Negativo", "description": "", "color": "#ef4444" },
-          { "id": "1769610082635", "name": "tonaso", "description": "", "color": "#8b5cf6" }
-        ]
+        "tono": {
+          "color": "#10b981",
+          "values": [
+            {
+              "id": "1",
+              "name": "Positivo",
+              "description": ""
+            },
+            {
+              "id": "2",
+              "name": "Negativo",
+              "description": ""
+            }
+          ]
+        }
       },
       {
-        "type_of_discourse": [
-          { "id": "1", "name": "Literal", "description": "", "color": "#3b82f6" },
-          { "id": "2", "name": "Irónico", "description": "", "color": "#f59e0b" }
-        ]
+        "modo_discursivo": {
+          "color": "#3b82f6",
+          "values": [
+            {
+              "id": "4",
+              "name": "Expresivo",
+              "description": ""
+            },
+            {
+              "id": "5",
+              "name": "Figurativo",
+              "description": ""
+            },
+            {
+              "id": "6",
+              "name": "Referencial",
+              "description": ""
+            }
+          ]
+        }
+      },
+      {
+        "experiencia": {
+          "color": "#3b82f6",
+          "values": [
+            {
+              "id": "7",
+              "name": "Colectiva",
+              "description": ""
+            },
+            {
+              "id": "8",
+              "name": "Heredada",
+              "description": ""
+            },
+            {
+              "id": "9",
+              "name": "Crítica",
+              "description": ""
+            },
+            {
+              "id": "10",
+              "name": "Resignación",
+              "description": ""
+            }
+          ]
+        }
+      },
+      {
+        "valoracion": {
+          "color": "#3b82f6",
+          "values": [
+            {
+              "id": "11",
+              "name": "Crítica",
+              "description": ""
+            },
+            {
+              "id": "12",
+              "name": "Resignación",
+              "description": ""
+            },
+            {
+              "id": "13",
+              "name": "Reivindicación",
+              "description": ""
+            },
+            {
+              "id": "14",
+              "name": "Reconocimiento",
+              "description": ""
+            }
+          ]
+        }
+      },
+      {
+        "tiempo": {
+          "color": "#3b82f6",
+          "values": [
+            {
+              "id": "15",
+              "name": "Pasado",
+              "description": ""
+            },
+            {
+              "id": "16",
+              "name": "Presente",
+              "description": ""
+            },
+            {
+              "id": "17",
+              "name": "Futuro",
+              "description": ""
+            }
+          ]
+        }
       }
     ]
   },
@@ -27,11 +128,30 @@
         "name": "Preguntas Introductorias (Personales y del hogar)",
         "color": "#d946ef",
         "subCategories": [
-          { "id": "1", "name": "Perfil demografico", "color": "#06b6d4" },
-          { "id": "2", "name": "Perfil educativo", "color": "#10b981" },
-          { "id": "3", "name": "Perfil laboral", "color": "#f97316" },
-          { "id": "4", "name": "Estructura familiar", "color": "#f43f5e" },
-          { "id": "5", "name": "Situación habitacional", "color": "#84cc16" }
+          {
+            "id": "18",
+            "name": "Perfil_demográfico",
+            "description": "",
+            "type_info": ""
+          },
+          {
+            "id": "19",
+            "name": "Perfil_profesional",
+            "description": "",
+            "type_info": ""
+          },
+          {
+            "id": "20",
+            "name": "Estructura_familiar",
+            "description": "",
+            "type_info": ""
+          },
+          {
+            "id": "21",
+            "name": "Situación_habitacional",
+            "description": "",
+            "type_info": ""
+          }
         ]
       },
       {
@@ -39,15 +159,336 @@
         "name": "Arraigo al lugar e identidad",
         "color": "#6366f1",
         "subCategories": [
-          { "id": "1", "name": "Residencia y origen", "color": "#14b8a6" },
-          { "id": "2", "name": "definicion hogar", "color": "#ec4899" }
+          {
+            "id": "22",
+            "name": "Percepción_territorio",
+            "description": "",
+            "type_info": ""
+          },
+          {
+            "id": "23",
+            "name": "Relaciones_sociales_territorio",
+            "description": "",
+            "type_info": ""
+          },
+          {
+            "id": "24",
+            "name": "Oportunidades_territorio",
+            "description": "",
+            "type_info": ""
+          },
+          {
+            "id": "25",
+            "name": "Identidad_arraigo",
+            "description": "",
+            "type_info": ""
+          },
+          {
+            "id": "26",
+            "name": "Identidad_nacional",
+            "description": "",
+            "type_info": ""
+          },
+          {
+            "id": "27",
+            "name": "Desarraigo",
+            "description": "",
+            "type_info": ""
+          }
         ]
       },
-      { "id": "3", "name": "Estrategias de los hogares", "color": "#a855f7", "subCategories": [] },
-      { "id": "4", "name": "Trayectorias Migratorias", "color": "#eab308", "subCategories": [] },
-      { "id": "5", "name": "Movilidades de futuro", "color": "#22c55e", "subCategories": [] },
-      { "id": "6", "name": "Impactos de la migración", "color": "#3b82f6", "subCategories": [] },
-      { "id": "7", "name": "Transformaciones con y tras la pandemia", "color": "#f43f5e", "subCategories": [] }
+      {
+        "id": "3",
+        "name": "Estrategias de los hogares",
+        "color": "#6366f1",
+        "subCategories": [
+          {
+            "id": "28",
+            "name": "Acceso_servicios_básicos",
+            "description": "",
+            "type_info": ""
+          },
+          {
+            "id": "29",
+            "name": "Estrategias_habitacionales",
+            "description": "",
+            "type_info": ""
+          },
+          {
+            "id": "30",
+            "name": "Movilidad_transporte",
+            "description": "",
+            "type_info": ""
+          },
+          {
+            "id": "31",
+            "name": "Vida_social_cultural",
+            "description": "",
+            "type_info": ""
+          },
+          {
+            "id": "32",
+            "name": "Redes_apoyo_social",
+            "description": "",
+            "type_info": ""
+          },
+          {
+            "id": "33",
+            "name": "Estrategias_cuidados",
+            "description": "",
+            "type_info": ""
+          },
+          {
+            "id": "34",
+            "name": "Bienestar_calidad_vida",
+            "description": "",
+            "type_info": ""
+          },
+          {
+            "id": "35",
+            "name": "Servicios_integracion",
+            "description": "",
+            "type_info": ""
+          },
+          {
+            "id": "36",
+            "name": "Iniciativas_cambio",
+            "description": "",
+            "type_info": ""
+          }
+        ]
+      },
+      {
+        "id": "4",
+        "name": "Trayectorias Migratorias",
+        "description": "",
+        "type_info": "",
+        "color": "#eab308",
+        "subCategories": [
+          {
+            "id": "37",
+            "name": "Historia_migratoria",
+            "description": "",
+            "type_info": ""
+          },
+          {
+            "id": "38",
+            "name": "Perfil_migrante",
+            "description": "",
+            "type_info": ""
+          },
+          {
+            "id": "39",
+            "name": "Motivaciones_migracion",
+            "description": "",
+            "type_info": ""
+          },
+          {
+            "id": "40",
+            "name": "Factores_atraccion",
+            "description": "",
+            "type_info": ""
+          },
+          {
+            "id": "41",
+            "name": "Vinculos_origen_destino",
+            "description": "",
+            "type_info": ""
+          },
+          {
+            "id": "42",
+            "name": "Emociones_migracion",
+            "description": "",
+            "type_info": ""
+          },
+          {
+            "id": "43",
+            "name": "Memoria_adaptacion",
+            "description": "",
+            "type_info": ""
+          }
+        ]
+      },
+      {
+        "id": "5",
+        "name": "Movilidades de futuro",
+        "description": "",
+        "type_info": "",
+        "color": "#22c55e",
+        "subCategories": [
+          {
+            "id": "44",
+            "name": "Intenciones_futuro",
+            "description": "",
+            "type_info": ""
+          },
+          {
+            "id": "45",
+            "name": "Movilidad_futura",
+            "description": "",
+            "type_info": ""
+          },
+          {
+            "id": "46",
+            "name": "Cambios_vitales_futuros",
+            "description": "",
+            "type_info": ""
+          },
+          {
+            "id": "47",
+            "name": "Horizontes_temporales",
+            "description": "",
+            "type_info": ""
+          },
+          {
+            "id": "48",
+            "name": "Emociones_expectativas",
+            "description": "",
+            "type_info": ""
+          }
+        ]
+      },
+      {
+        "id": "6",
+        "name": "Impactos de la migración",
+        "description": "",
+        "type_info": "",
+        "color": "#3b82f6",
+        "subCategories": [
+          {
+            "id": "49",
+            "name": "Percepciones_demograficas",
+            "description": "",
+            "type_info": ""
+          },
+          {
+            "id": "50",
+            "name": "Efectos_migración_territorio",
+            "description": "",
+            "type_info": ""
+          },
+          {
+            "id": "51",
+            "name": "Valoracion_flujos_migratorios",
+            "description": "",
+            "type_info": ""
+          }
+        ]
+      },
+      {
+        "id": "7",
+        "name": "Transformaciones con y tras la pandemia",
+        "description": "",
+        "type_info": "",
+        "color": "#f43f5e",
+        "subCategories": [
+          {
+            "id": "52",
+            "name": "Rutinas_pandemia",
+            "description": "",
+            "type_info": ""
+          },
+          {
+            "id": "53",
+            "name": "Relaciones_comunidad_pandemia",
+            "description": "",
+            "type_info": ""
+          },
+          {
+            "id": "54",
+            "name": "Vinculo_territorial_pandemia",
+            "description": "",
+            "type_info": ""
+          },
+          {
+            "id": "55",
+            "name": "Impacto_economico_pandemia",
+            "description": "",
+            "type_info": ""
+          },
+          {
+            "id": "56",
+            "name": "Servicios_publicos_pandemia",
+            "description": "",
+            "type_info": ""
+          },
+          {
+            "id": "57",
+            "name": "Digitalizacion_pandemia",
+            "description": "",
+            "type_info": ""
+          },
+          {
+            "id": "58",
+            "name": "Desplazamientos_pandemia",
+            "description": "",
+            "type_info": ""
+          },
+          {
+            "id": "59",
+            "name": "Vivienda_pandemia",
+            "description": "",
+            "type_info": ""
+          },
+          {
+            "id": "60",
+            "name": "Movilidad_postpandemia",
+            "description": "",
+            "type_info": ""
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entities": [
+      {
+        "color": "#f43f5e",
+        "values": [
+          {
+            "id": "1",
+            "name": "pers",
+            "description": "",
+            "type_info": ""
+          },
+          {
+            "id": "2",
+            "name": "org",
+            "description": "",
+            "type_info": ""
+          },
+          {
+            "id": "3",
+            "name": "lugar",
+            "description": "",
+            "type_info": ""
+          },
+          {
+            "id": "4",
+            "name": "fecha",
+            "description": "",
+            "type_info": ""
+          },
+          {
+            "id": "5",
+            "name": "establ",
+            "description": "",
+            "type_info": ""
+          },
+          {
+            "id": "6",
+            "name": "acount",
+            "description": "",
+            "type_info": ""
+          },
+          {
+            "id": "7",
+            "name": "personaje",
+            "description": "",
+            "type_info": ""
+          }
+        ]
+      }
     ]
   }
 ]

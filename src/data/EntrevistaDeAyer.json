@@ -1,0 +1,16 @@
+{
+  "1": {
+    "line": "docker run --hostname=21d72fa353cd --env=POSTGRES_DB=postgres --env=POSTGRES_USER=odoo --env=POSTGRES_PASSWORD=odoo --env=PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/lib/postgresql/15/bin --env=GOSU_VERSION=1.19 --env=LANG=en_US.utf8 --env=PG_MAJOR=15 --env=PG_VERSION=15.16-1.pgdg13+1 --env=PGDATA=/var/lib/postgresql/data --volume=/var/lib/postgresql/data --network=bridge --restart=no --runtime=runc -d postgres:15",
+    "Interviewer": false,
+    "attributes": [],
+    "categories": [],
+    "entities": []
+  },
+  "2": {
+    "line": "docker run --hostname=232b8550184d --user=odoo --env=PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin --env=LANG=C.UTF-8 --env=ODOO_VERSION=16.0 --env=ODOO_RC=/etc/odoo/odoo.conf --volume=/mnt/extra-addons --volume=/var/lib/odoo --network=bridge -p 8069:8069 --link db:db --restart=no --runtime=runc -t -d odoo:16",
+    "Interviewer": false,
+    "attributes": [],
+    "categories": [],
+    "entities": []
+  }
+}

@@ -6,38 +6,31 @@
   height: 90vh;
 }
 
+/* Texto del etiquetador */
 .launcher-header {
   text-align: center;
-  margin-bottom: 20px;
+  margin-bottom: 50px;
 }
 
+/* Div de las opciones */
 .glass-panel {
-  background: rgba(21, 21, 21, 0.8);
-  border: 1px solid #333;
-  border-radius: 5px;
-  padding: 40px;
-  width: 70%;
-  max-width: 80%;
+  width: fit-content;
   margin: 0 auto;
-  backdrop-filter: blur(10px);
+  padding: 40px;
 }
-
-.neon-text-blue {
-  color: var(--electric-blue);
-  text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
-  font-size: 2.5rem;
-  margin-bottom: 0;
-}
+/* Estilos base movidos a general.css */
 
 .neon-text-blue span {
   color: #fff;
 }
+/* neon-text-blue base movido a general.css */
 
 .launcher-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-  margin: 40px 0;
+  display: flex;
+  flex-direction: column;
+  width: fit-content;
+  gap: 10px;
+  margin-bottom: 20px;
 }
 
 .config-card {
@@ -88,10 +81,9 @@ footer {
 }
 
 .btn-main-action {
-  margin: 0 auto;
   padding: 20px 50px;
-  border-radius: 10px;
   border: none;
+  border-radius: 10px;
   background: linear-gradient(45deg, var(--electric-blue), var(--neon-purple));
   color: white;
   font-weight: bold;
@@ -99,6 +91,7 @@ footer {
   cursor: pointer;
   box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
 }
+/* Reutiliza la lógica de .btn-main de general.css pero con tamaño custom */
 
 .btn-main-action.disabled {
   filter: grayscale(1);
@@ -106,12 +99,75 @@ footer {
   cursor: not-allowed;
 }
 
+/* Botón de selección de archivo personalizado */
+.custom-file-upload {
+  display: inline-block;
+  padding: 12px 30px;
+  background: rgba(0, 212, 255, 0.1);
+  border: 2px solid var(--electric-blue);
+  border-radius: 50px;
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-size: 0.9rem;
+  margin-bottom: 10px;
+  box-shadow: 0 4px 15px rgba(0, 212, 255, 0.1);
+}
+
+.custom-file-upload:hover {
+  background: var(--electric-blue);
+  color: #000;
+  box-shadow: 0 0 25px rgba(0, 212, 255, 0.5);
+  transform: scale(1.05);
+}
+
+.custom-file-upload:active {
+  transform: scale(0.98);
+}
+
+/* Estilos para el Select de Modelos */
+.neon-select {
+  width: 100%;
+  padding: 12px 15px;
+  background: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 8px;
+  color: #e0e0e0;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin-bottom: 5px;
+  outline: none;
+  appearance: none;
+  /* Quitar flecha por defecto para poner una personalizada si se quiere, o dejarlo así */
+  background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%239d50bb%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 15px center;
+  background-size: 16px;
+}
+
+.neon-select:focus {
+  border-color: var(--neon-purple);
+  box-shadow: 0 0 15px rgba(157, 80, 187, 0.3);
+  background-color: #222;
+}
+
+.neon-select option {
+  background: #2b2b2b;
+  color: #fff;
+  padding: 10px;
+}
+
 /* Contenedor del nombre del archivo debajo del botón */
 .file-name {
   display: block;
-  margin-top: 10px;
-  font-size: 0.8rem;
-  color: var(--electric-blue);
+  margin-top: 5px;
+  font-size: 0.85rem;
+  color: #888;
+  font-style: italic;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -163,4 +219,10 @@ footer {
   border-color: var(--neon-purple);
   color: var(--neon-purple);
   box-shadow: 0 0 10px rgba(157, 80, 187, 0.2);
+}
+
+.delete-btn:hover {
+  border-color: #ff4444 !important;
+  color: #ff4444 !important;
+  box-shadow: 0 0 10px rgba(255, 68, 68, 0.3) !important;
 }

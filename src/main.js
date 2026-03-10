@@ -1,7 +1,8 @@
-import { app, BrowserWindow, ipcMain } from 'electron';
-import { getModelsList} from './main/launcher.js';
-import { saveModel, getModel, getModelToEdit } from './main/createModel.js';
-import { prepareText, getJsonData, saveCurrentProgress } from './main/tagger.js';
+import { app, BrowserWindow, ipcMain, dialog } from 'electron';
+
+import { getModelsList, importModel } from './main/launcher.js';
+import { saveModel, getModel, getModelToEdit, deleteModel } from './main/createModel.js';
+import { prepareText, getJsonData, saveCurrentProgress, exportToHtml } from './main/tagger.js';
 
 import path from 'node:path';
 import started from 'electron-squirrel-startup';
@@ -17,12 +18,11 @@ const createWindow = () => {
     },
   });
 
-  if (MAIN_WINDOW_VITE_DEV_SERVER_URL) 
-    { mainWindow.loadURL(MAIN_WINDOW_VITE_DEV_SERVER_URL);} 
-  else 
-    { mainWindow.loadFile(path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html`));}
+  if (MAIN_WINDOW_VITE_DEV_SERVER_URL) { mainWindow.loadURL(MAIN_WINDOW_VITE_DEV_SERVER_URL); }
+  else { mainWindow.loadFile(path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html`)); }
 
-  mainWindow.webContents.openDevTools();
+  //? Abrir la consola del dev
+  // mainWindow.webContents.openDevTools();
 };
 
 app.whenReady().then(() => {
@@ -41,41 +41,78 @@ app.on('window-all-closed', () => {
   }
 });
 
+//! Launcher view
+ipcMain.handle('getAllModels', async () => { return getModelsList(); });
 
-// ! Launcher view
-// * Lectura de archivos json en la carpeta models
-ipcMain.handle('getAllModels', async () => {
-  return getModelsList();
+ipcMain.handle('importModel', async () => {
+  const mainWindow = BrowserWindow.getFocusedWindow();
+  return importModel(mainWindow);
 });
 
-// ! CreateModel View
-// * Obtener modelo
+ipcMain.handle('deleteModel', async (_event, modelName) => {
+  return deleteModel(modelName);
+});
+
+//! CreateModel View
 ipcMain.handle('getModel', async (_event, modelName) => {
   return getModel(modelName);
 });
 
-// * Obtener modelo a editar
 ipcMain.handle('getModelToEdit', async (_event, modelName) => {
   return getModelToEdit(modelName);
 });
 
-// * Guardar modelo
 ipcMain.handle('saveModel', async (_event, modelData) => {
   return saveModel(modelData);
 });
 
-// ! Tagger View
-// * Crear el json del texto
+//! Tagger View
 ipcMain.handle('prepareText', async (_event, fileName, textContent) => {
   return prepareText(fileName, textContent);
 });
 
-// * Obtener json
 ipcMain.handle('getJsonData', async (_event, fileName) => {
   return getJsonData(fileName);
 });
 
-// * Guardar progreso
 ipcMain.handle('saveCurrentProgress', async (_event, fileName, data) => {
   return saveCurrentProgress(fileName, data);
+});
+
+ipcMain.handle('exportToHtml', async (_event, fileName, htmlContent) => {
+  const mainWindow = BrowserWindow.getFocusedWindow();
+
+  const { filePath, canceled } = await dialog.showSaveDialog(mainWindow, {
+    title: 'Exportar Sesión a HTML',
+    defaultPath: fileName.replace(/\.[^/.]+$/, "") + "_export.html",
+    filters: [
+      { name: 'Páginas Web', extensions: ['html'] },
+      { name: 'Todos los archivos', extensions: ['*'] }
+    ]
+  });
+
+  if (canceled || !filePath) {
+    return { success: false, error: 'Exportación cancelada', canceled: true };
+  }
+
+  return exportToHtml(filePath, htmlContent);
+});
+
+ipcMain.handle('exportToTxt', async (_event, fileName, txtContent) => {
+  const mainWindow = BrowserWindow.getFocusedWindow();
+
+  const { filePath, canceled } = await dialog.showSaveDialog(mainWindow, {
+    title: 'Exportar Sesión a TXT',
+    defaultPath: fileName.replace(/\.[^/.]+$/, "") + "_export.txt",
+    filters: [
+      { name: 'Archivos de Texto', extensions: ['txt'] },
+      { name: 'Todos los archivos', extensions: ['*'] }
+    ]
+  });
+
+  if (canceled || !filePath) {
+    return { success: false, error: 'Exportación cancelada', canceled: true };
+  }
+
+  return exportToHtml(filePath, txtContent);
 });

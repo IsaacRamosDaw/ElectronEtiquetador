@@ -11,16 +11,21 @@ export default function CreateModelView() {
   const [loading, setLoading] = useState(!!modelName);
   const [attributes, setAttributes] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [entities, setEntities] = useState([]);
 
   // 1. Estado para crear una Categoría Nueva (Padre)
   const [newCatData, setNewCatData] = useState({ name: '', desc: '', color: '#ff00ff' });
 
   // 2. Estado para la subcategoría que estamos escribiendo actualmente
-  // Guardamos el índice para saber en qué categoría estamos escribiendo
   const [activeSubData, setActiveSubData] = useState({ catIndex: null, name: '', color: '#00ffaa' });
 
-  const [newAttrGroup, setNewAttrGroup] = useState('');
-  const [newItemData, setNewItemData] = useState({ name: '', desc: '', color: '#00d4ff' });
+  // Estados para Atributos
+  const [newAttrGroup, setNewAttrGroup] = useState({ name: '', color: '#00d4ff' });
+  const [newAttrVal, setNewAttrVal] = useState({ name: '', desc: '' });
+
+  // Estados para Entidades
+  const [newEntGroup, setNewEntGroup] = useState({ name: '', color: '#f43f5e' });
+  const [newEntVal, setNewEntVal] = useState({ name: '', desc: '' });
 
   useEffect(() => {
     if (modelName) {
@@ -31,6 +36,7 @@ export default function CreateModelView() {
             setTitle(result.data[0].title);
             setAttributes(result.data[1].attributes || []);
             setCategories(result.data[2].categories || []);
+            setEntities(result.data[3]?.entities || []);
           }
         } catch (error) { console.error(error); } finally { setLoading(false); }
       })();
@@ -39,32 +45,57 @@ export default function CreateModelView() {
 
   // --- LÓGICA DE ATRIBUTOS ---
   const addAttributeGroup = () => {
-    if (!newAttrGroup.trim()) return;
-    setAttributes([...attributes, { [newAttrGroup]: [] }]);
-    setNewAttrGroup('');
+    if (!newAttrGroup.name.trim()) return;
+    setAttributes([...attributes, { [newAttrGroup.name]: { color: newAttrGroup.color, values: [] } }]);
+    setNewAttrGroup({ name: '', color: '#00d4ff' });
   };
 
   const addAttributeItem = (attrIndex, attrName) => {
-    if (!newItemData.name.trim()) return;
+    if (!newAttrVal.name.trim()) return;
     const newAttributes = [...attributes];
-    newAttributes[attrIndex][attrName].push({
+    newAttributes[attrIndex][attrName].values.push({
       id: Date.now().toString(),
-      name: newItemData.name,
-      description: newItemData.desc,
-      color: newItemData.color
+      name: newAttrVal.name,
+      description: newAttrVal.desc,
+      color: newAttributes[attrIndex][attrName].color
     });
     setAttributes(newAttributes);
-    setNewItemData({ name: '', desc: '', color: '#00d4ff' });
+    setNewAttrVal({ name: '', desc: '' });
   };
 
-  const removeAttribute = (index) => {
-    setAttributes(attributes.filter((_, i) => i !== index));
-  };
+  const removeAttribute = (index) => setAttributes(attributes.filter((_, i) => i !== index));
 
   const removeAttributeItem = (attrIndex, attrName, itemIndex) => {
     const newAttributes = [...attributes];
-    newAttributes[attrIndex][attrName].splice(itemIndex, 1);
+    newAttributes[attrIndex][attrName].values.splice(itemIndex, 1);
     setAttributes(newAttributes);
+  };
+
+  // --- LÓGICA DE ENTIDADES ---
+  const addEntityGroup = () => {
+    setEntities([...entities, { color: newEntGroup.color, values: [] }]);
+    setNewEntGroup({ name: '', color: '#f43f5e' });
+  };
+
+  const addEntityItem = (entIndex) => {
+    if (!newEntVal.name.trim()) return;
+    const newEntities = [...entities];
+    newEntities[entIndex].values.push({
+      id: Date.now().toString(),
+      name: newEntVal.name,
+      description: newEntVal.desc,
+      color: newEntities[entIndex].color
+    });
+    setEntities(newEntities);
+    setNewEntVal({ name: '', desc: '' });
+  };
+
+  const removeEntityGroup = (index) => setEntities(entities.filter((_, i) => i !== index));
+
+  const removeEntityItem = (entIndex, itemIndex) => {
+    const newEntities = [...entities];
+    newEntities[entIndex].values.splice(itemIndex, 1);
+    setEntities(newEntities);
   };
 
   // --- LÓGICA DE CATEGORÍAS ---
@@ -78,7 +109,7 @@ export default function CreateModelView() {
       subCategories: []
     };
     setCategories([...categories, newCategory]);
-    setNewCatData({ name: '', desc: '', color: '#ff00ff' }); // Limpiar formulario padre
+    setNewCatData({ name: '', desc: '', color: '#ff00ff' });
   };
 
   const addSubCategory = (catIndex) => {
@@ -94,7 +125,6 @@ export default function CreateModelView() {
 
     newCategories[catIndex].subCategories.push(newSub);
     setCategories(newCategories);
-    // Limpiar solo el estado de subcategoría
     setActiveSubData({ catIndex: null, name: '', color: '#00ffaa' });
   };
 
@@ -107,7 +137,7 @@ export default function CreateModelView() {
 
   const handleSave = async () => {
     if (!title) return;
-    const modelData = [{ title }, { attributes }, { categories }];
+    const modelData = [{ title }, { attributes }, { categories }, { entities }];
     const result = await window.createModelAPI.saveModel({ fileName: title, data: modelData });
     if (result.success) navigate('/');
   };
@@ -141,14 +171,19 @@ export default function CreateModelView() {
           <div className="form-section">
             <h3>Atributos</h3>
 
-            {/* Input para crear el grupo padre */}
             <div className="add-item-panel">
               <input
                 type="text"
                 className="neon-input"
                 placeholder="Nuevo grupo (ej: Sentimiento)"
-                value={newAttrGroup}
-                onChange={(e) => setNewAttrGroup(e.target.value)}
+                value={newAttrGroup.name}
+                onChange={(e) => setNewAttrGroup({ ...newAttrGroup, name: e.target.value })}
+              />
+              <input
+                type="color"
+                className="color-picker"
+                value={newAttrGroup.color}
+                onChange={(e) => setNewAttrGroup({ ...newAttrGroup, color: e.target.value })}
               />
               <button className="btn-secondary" onClick={addAttributeGroup}>+ Crear Grupo</button>
             </div>
@@ -156,32 +191,77 @@ export default function CreateModelView() {
             <ul className="item-list">
               {attributes.map((attr, i) => {
                 const attrName = Object.keys(attr)[0];
+                const groupData = attr[attrName];
                 return (
                   <li key={i} className="attribute-item">
                     <div className="item-row">
-                      <span className="purple-glow">◈ {attrName}</span>
+                      <div className="group-info">
+                        <span style={{ color: groupData.color }}>◈</span>
+                        <span className="purple-glow">{attrName}</span>
+                      </div>
                       <button className="btn-icon" onClick={() => removeAttribute(i)}>🗑️</button>
                     </div>
 
                     <ul className="sub-item-list">
-                      {attr[attrName].map((item, j) => (
+                      {groupData.values.map((item, j) => (
                         <li key={item.id} className="item-row">
-                          <span style={{ color: item.color }}>●</span>
+                          <span style={{ color: groupData.color }}>●</span>
                           <span>{item.name}</span>
                           <button className="btn-icon" onClick={() => removeAttributeItem(i, attrName, j)}>×</button>
                         </li>
                       ))}
                     </ul>
 
-                    {/* Formulario pequeño para añadir valores al grupo */}
                     <div className="inline-form">
-                      <input type="text" placeholder="Valor" value={newItemData.name} onChange={e => setNewItemData({ ...newItemData, name: e.target.value })} />
-                      <input type="color" value={newItemData.color} onChange={e => setNewItemData({ ...newItemData, color: e.target.value })} />
+                      <input type="text" placeholder="Valor" value={newAttrVal.name} onChange={e => setNewAttrVal({ ...newAttrVal, name: e.target.value })} />
                       <button className="link-btn-alt" onClick={() => addAttributeItem(i, attrName)}>Añadir</button>
                     </div>
                   </li>
                 );
               })}
+            </ul>
+          </div>
+
+          {/* SECCIÓN ENTIDADES */}
+          <div className="form-section">
+            <h3>Entidades</h3>
+
+            <div className="add-item-panel">
+              <input
+                type="color"
+                className="color-picker"
+                value={newEntGroup.color}
+                onChange={(e) => setNewEntGroup({ ...newEntGroup, color: e.target.value })}
+              />
+              <button className="btn-secondary" onClick={addEntityGroup}>+ Crear Grupo de Entidades</button>
+            </div>
+
+            <ul className="item-list">
+              {entities.map((ent, i) => (
+                <li key={i} className="attribute-item">
+                  <div className="item-row">
+                    <div className="group-info">
+                      <span style={{ color: ent.color }}>♦</span>
+                    </div>
+                    <button className="btn-icon" onClick={() => removeEntityGroup(i)}>🗑️</button>
+                  </div>
+
+                  <ul className="sub-item-list">
+                    {ent.values.map((item, j) => (
+                      <li key={item.id} className="item-row">
+                        <span style={{ color: ent.color }}>●</span>
+                        <span>{item.name}</span>
+                        <button className="btn-icon" onClick={() => removeEntityItem(i, j)}>×</button>
+                      </li>
+                    ))}
+                  </ul>
+
+                  <div className="inline-form">
+                    <input type="text" placeholder="Entidad (ej: persona, lugar)" value={newEntVal.name} onChange={e => setNewEntVal({ ...newEntVal, name: e.target.value })} />
+                    <button className="link-btn-alt" onClick={() => addEntityItem(i)}>Añadir</button>
+                  </div>
+                </li>
+              ))}
             </ul>
           </div>
 
@@ -212,7 +292,7 @@ export default function CreateModelView() {
                   <ul className="sub-item-list">
                     {cat.subCategories.map((sub, j) => (
                       <li key={sub.id} className="item-row sub-cat">
-                        <span style={{ color: sub.color }}>└─ {sub.name}</span>
+                        <span style={{ color: cat.color }}>└─ {sub.name}</span>
                         <button className="btn-icon" onClick={() => removeSubCategory(i, j)}>×</button>
                       </li>
                     ))}
@@ -225,11 +305,6 @@ export default function CreateModelView() {
                       placeholder="Nueva subcategoría..."
                       value={activeSubData.catIndex === i ? activeSubData.name : ''}
                       onChange={e => setActiveSubData({ catIndex: i, name: e.target.value, color: activeSubData.color })}
-                    />
-                    <input
-                      type="color"
-                      value={activeSubData.catIndex === i ? activeSubData.color : '#00ffaa'}
-                      onChange={e => setActiveSubData({ ...activeSubData, catIndex: i, color: e.target.value })}
                     />
                     <button className="link-btn-alt" onClick={() => addSubCategory(i)}>+ Añadir Sub</button>
                   </div>

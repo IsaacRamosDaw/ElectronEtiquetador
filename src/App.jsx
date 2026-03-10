@@ -1,4 +1,5 @@
 import './app.css';
+import './style/general.css';
 import { HashRouter as Router, Routes, Route } from 'react-router-dom';
 import LauncherView from './views/LauncherView.jsx';
 import CreateModelView from './views/CreateModelView.jsx';

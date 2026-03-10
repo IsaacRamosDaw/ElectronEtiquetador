@@ -1,0 +1,55 @@
+[
+  {
+    "title": "crearapp"
+  },
+  {
+    "attributes": [
+      {
+        "atributillo": {
+          "color": "#00d4ff",
+          "values": [
+            {
+              "id": "1772989120221",
+              "name": "Valor",
+              "description": "",
+              "color": "#00d4ff"
+            }
+          ]
+        }
+      }
+    ]
+  },
+  {
+    "categories": [
+      {
+        "id": "1772989146375",
+        "name": "cTEGORIAS",
+        "color": "#ff00ff",
+        "description": "",
+        "subCategories": [
+          {
+            "id": "1772989150076",
+            "name": "JKSLJFAKSD",
+            "color": "#00ffaa",
+            "description": ""
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "entities": [
+      {
+        "color": "#f43f5e",
+        "values": [
+          {
+            "id": "1772989139705",
+            "name": "Grupillo",
+            "description": "",
+            "color": "#f43f5e"
+          }
+        ]
+      }
+    ]
+  }
+]

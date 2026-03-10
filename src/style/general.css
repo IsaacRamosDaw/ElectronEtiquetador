@@ -1,0 +1,89 @@
+  /* --- VARIABLES GLOBALES --- */
+:root {
+  --bg-dark: #101520;
+  --card-bg: #1e293b;
+  --electric-blue: #00d4ff;
+  --neon-purple: #9d50bb;
+  --neon-red: #ff0055;
+  --text-main: #e2e8f0;
+  --text-muted: #94a3b8;
+  --glass-bg: rgba(15, 21, 32, 0.8);
+  --border-color: #333;
+}
+
+/* --- ESTILOS BASE --- */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--bg-dark);
+  color: var(--text-main);
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  overflow: hidden;
+  margin: 0;
+}
+
+/* --- SCROLLBARS PERSONALIZADOS --- */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #222;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #333;
+}
+
+/* --- UTILIDADES Y CLASES COMPARTIDAS --- */
+
+.glass-panel {
+  background: var(--glass-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  backdrop-filter: blur(10px);
+}
+
+.neon-text-blue {
+  color: var(--electric-blue);
+  text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+  font-weight: bold;
+}
+
+.blue-glow { text-shadow: 0 0 15px var(--electric-blue); }
+.purple-glow { text-shadow: 0 0 15px var(--neon-purple); }
+
+/* Fondos degradados comunes */
+.main-bg {
+  background:
+    radial-gradient(circle at top right, #1a1033, transparent),
+    radial-gradient(circle at bottom left, #0a1a2b, transparent);
+}
+
+/* Botones comunes */
+.btn-main {
+  padding: 12px 30px;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(45deg, var(--electric-blue), var(--neon-purple));
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.btn-main:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(157, 80, 187, 0.4);
+}
+
+.btn-main:disabled {
+  filter: grayscale(1);
+  opacity: 0.5;
+  cursor: not-allowed;
+  transform: none;
+}

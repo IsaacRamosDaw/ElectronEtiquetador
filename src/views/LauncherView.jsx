@@ -1,45 +1,92 @@
 import { useState, useEffect } from 'react'
-import { removeExtension } from '../utils/utils.js'
 import { useNavigate } from 'react-router-dom'
+import { removeExtension } from '../utils/utils.js'
 
 import "../style/launcherView.css"
 
 export default function LauncherView() {
   const navigate = useNavigate();
 
-  const [models, setModels] = useState([]);
+  //* Archivo seleccionado en el input del file
   const [fileSelected, setFileSelected] = useState(null);
+  //* Modelos añadidos en el input del select
+  const [models, setModels] = useState([]);
+  //* Modelo seleccionado en el select
   const [selectedModel, setSelectedModel] = useState("");
 
-  // Cargar modelos
-  useEffect(() => {
-    (async () => {
-      try {
-        const models = await window.launcherAPI.getAllModels();
-        setModels(models);
-      } catch (error) {
-        console.error("Error al obtener modelos:", error);
-      }
-    })()
-  }, [])
-
-  // Manejador para leer el archivo TXT
+  //! ARCHIVO TXT
+  //* Añadir un txt
   const addFile = (e) => {
     if (e.target.files[0]) {
       const file = new FileReader();
       file.onload = (event) => {
-
+        
         setFileSelected({
           name: e.target.files[0].name,
           content: event.target.result
         });
       };
-
+      
       file.readAsText(e.target.files[0]);
     }
   }
+  
+  //! MODELOS 
+  //* Cargar modelos al select
+  const fetchModels = async () => {
+    try {
+      const models = await window.launcherAPI.getAllModels();
+      setModels(models);
+    } catch (error) {
+      console.error("Error al obtener modelos:", error);
+    }
+  };
 
-  // Manejador para iniciar el etiquetado { Navega a TaggerView }
+  useEffect(() => {
+    fetchModels();
+  }, [])
+
+  //* Importar modelo
+  const handleImportModel = async () => {
+    try {
+      const result = await window.launcherAPI.importModel();
+      if (result.success) {
+        await fetchModels();
+        setSelectedModel(result.fileName);
+      } else if (!result.canceled) {
+        alert("Error al importar el modelo: " + result.error);
+      }
+    } catch (error) {
+      console.error("Error importing model:", error);
+    }
+  };
+
+  //* Manejador para eliminar modelo
+  const handleDeleteModel = async () => {
+    if (!selectedModel) return;
+
+    const confirmDelete = window.confirm(
+      `¿Estás seguro de que quieres eliminar el modelo "${removeExtension(selectedModel)}"?`
+    );
+
+    if (!confirmDelete) return;
+
+    try {
+      const result = await window.launcherAPI.deleteModel(removeExtension(selectedModel));
+
+      if (result.success) {
+        setSelectedModel("");
+        await fetchModels();
+      }
+      else { alert("Error al eliminar el modelo: " + result.error); }
+
+    } catch (error) {
+      console.error("Error deleting model:", error);
+    }
+  };
+
+  //! ETIQUETADO
+  //* Manejador para iniciar el etiquetado { Navega a TaggerView }
   const handleStartTagging = async () => {
     if (!fileSelected || !selectedModel) {
       alert("Selecciona un archivo y un modelo primero");
@@ -63,28 +110,27 @@ export default function LauncherView() {
     }
   };
 
+
   return (
     <div className="launcher-view">
       <header className="launcher-header">
-        <h1 className="neon-text-blue">Etiquetador<span>ULPGC LU(G)AR</span></h1>
+        <h1 className="neon-text-blue">Etiquetador<span> ULPGC LU(G)AR</span></h1>
       </header>
 
       <div className="glass-panel">
         <main className="launcher-grid">
           <section className="config-card">
             <div className="card-icon blue-glow">📁</div>
-            <p>Selecciona el archivo</p>
-
             <div className="file-input-wrapper">
               <label htmlFor="txt-upload" className="custom-file-upload">
-                {fileSelected ? '✅ Archivo cargado' : 'Seleccionar TXT'}
+                {fileSelected ? '📂 Cambiar archivo' : '📁 Seleccionar TXT'}
               </label>
               <input
                 id="txt-upload"
                 type="file"
                 accept=".txt"
                 onChange={addFile}
-              // style={{ display: 'none' }}
+                style={{ display: 'none' }}
               />
               {fileSelected && <span className="file-name">{fileSelected.name}</span>}
             </div>
@@ -92,7 +138,7 @@ export default function LauncherView() {
 
           <section className="config-card">
             <div className="card-icon purple-glow">📑</div>
-            <h3>Modelo de atributos</h3>
+            <h3>Modelo de Etiquetas</h3>
 
             <select
               className="neon-select"
@@ -108,21 +154,29 @@ export default function LauncherView() {
             <div className="divider">o</div>
 
             <div className='select-model-container'>
-              <button className="link-btn-alt" onClick={() => navigate('/create-model')}> + Crear nuevo </button>
+              <button className="link-btn-alt" onClick={() => navigate('/create-model')}> Crear nuevo </button>
+              <button className="link-btn-alt" onClick={handleImportModel}> 📥 Importar </button>
               <button
                 className="link-btn-alt"
                 disabled={!selectedModel}
                 onClick={() => navigate(`/edit-model/${removeExtension(selectedModel)}`)}
                 style={{ opacity: selectedModel ? 1 : 0.5 }}
               >
-                ✏️ Editar seleccionado
+                ✏️ Editar
+              </button>
+              <button
+                className="link-btn-alt delete-btn"
+                disabled={!selectedModel}
+                onClick={handleDeleteModel}
+                style={{ opacity: selectedModel ? 1 : 0.5, color: '#ff4444' }}
+              >
+                🗑️ Eliminar
               </button>
             </div>
           </section>
         </main>
 
         <footer>
-        {/* <footer className="launcher-actions"> */}
           <button
             className={`btn-main-action ${(fileSelected && selectedModel) ? 'active' : 'disabled'}`}
             disabled={!fileSelected || !selectedModel}

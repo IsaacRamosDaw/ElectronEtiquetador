@@ -11,18 +11,15 @@
 }
 
 .create-model-wrapper {
-  background: rgba(21, 21, 21, 0.8);
-  border: 1px solid #333;
-  border-radius: 5px;
-  padding: 40px;
   width: 70%;
   max-width: 80%;
   margin: 0 auto;
-  backdrop-filter: blur(10px);
   max-height: 90vh;
   display: flex;
   flex-direction: column;
+  padding: 40px;
 }
+/* glass-panel base movido a general.css */
 
 .form-container {
   flex: 1;
@@ -31,15 +28,7 @@
   margin: 20px 0;
 }
 
-/* Scrollbar styling for a cleaner look */
-.form-container::-webkit-scrollbar {
-  width: 6px;
-}
-
-.form-container::-webkit-scrollbar-thumb {
-  background: #333;
-  border-radius: 3px;
-}
+/* Scrollbars definidos globalmente */
 
 .form-section {
   background: var(--card-bg);
@@ -214,9 +203,7 @@
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
 }
 
-/* Utility classes to match LauncherView */
-.blue-glow { text-shadow: 0 0 15px var(--electric-blue); }
-.purple-glow { text-shadow: 0 0 15px var(--neon-purple); }
+/* blue-glow y purple-glow movidos a general.css */
 
 input[type="color"] {
   appearance: none;

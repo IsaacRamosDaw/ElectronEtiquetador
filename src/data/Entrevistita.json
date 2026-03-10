@@ -3,60 +3,226 @@
     "line": "E_1: ¿Cómo se encuentra hoy?",
     "Interviewer": true,
     "attributes": [],
-    "categories": []
+    "categories": [
+      {
+        "id": 1772201900384,
+        "type": "Preguntas Introductorias (Personales y del hogar)",
+        "value": "Perfil_demográfico",
+        "text": "¿Cómo se encuentra hoy?",
+        "start": 0,
+        "end": 23
+      }
+    ],
+    "entities": []
   },
   "2": {
     "line": "I_1: Bien, un poco cansado, pero bien en general.",
     "Interviewer": false,
     "attributes": [],
-    "categories": []
+    "categories": [
+      {
+        "id": 1772201905616,
+        "type": "Preguntas Introductorias (Personales y del hogar)",
+        "value": "Perfil_demográfico",
+        "text": "Bien, un poco cansado",
+        "start": 0,
+        "end": 21
+      },
+      {
+        "id": 1772201911528,
+        "type": "Arraigo al lugar e identidad",
+        "value": "Percepción_territorio",
+        "text": "pero bien en general.",
+        "start": 23,
+        "end": 44
+      }
+    ],
+    "entities": []
   },
   "3": {
     "line": "E_2: ¿Seguro? Lo noto algo tenso.",
     "Interviewer": true,
     "attributes": [],
-    "categories": []
+    "categories": [
+      {
+        "id": 1772201915032,
+        "type": "Preguntas Introductorias (Personales y del hogar)",
+        "value": "Perfil_demográfico",
+        "text": "¿Seguro? ",
+        "start": 0,
+        "end": 9
+      },
+      {
+        "id": 1772201917952,
+        "type": "Preguntas Introductorias (Personales y del hogar)",
+        "value": "Situación_habitacional",
+        "text": "Lo noto algo tenso.",
+        "start": 9,
+        "end": 28
+      }
+    ],
+    "entities": []
   },
   "4": {
     "line": "I_2: Sí, bastante seguro. Ha sido una semana larga, nada más.",
     "Interviewer": false,
-    "attributes": [],
-    "categories": []
+    "attributes": [
+      {
+        "id": 1772201922856,
+        "type": "valoracion",
+        "value": "Reconocimiento",
+        "text": "Sí, bastante seguro. Ha sido una semana larga, nada más.",
+        "start": 0,
+        "end": 56
+      }
+    ],
+    "categories": [
+      {
+        "id": 1772201921856,
+        "type": "Preguntas Introductorias (Personales y del hogar)",
+        "value": "Perfil_demográfico",
+        "text": "Sí, bastante seguro. Ha sido una semana larga, nada más.",
+        "start": 0,
+        "end": 56
+      }
+    ],
+    "entities": []
   },
   "5": {
-    "line": "E_3: ¿Hay algo en particular que le haya afectado últimamente?",
+    "line": "E_1: ¿Hay algo en particular que le haya afectado últimamente?",
     "Interviewer": true,
-    "attributes": [],
-    "categories": []
+    "attributes": [
+      {
+        "id": 1772201930175,
+        "type": "valoracion",
+        "value": "Crítica",
+        "text": "¿Hay algo en particular",
+        "start": 0,
+        "end": 23
+      },
+      {
+        "id": 1772201936928,
+        "type": "modo_discursivo",
+        "value": "Referencial",
+        "text": "que le haya afectado últimamente?",
+        "start": 24,
+        "end": 57
+      },
+      {
+        "id": 1772201938760,
+        "type": "tono",
+        "value": "Positivo",
+        "text": "que le haya afectado últimamente?",
+        "start": 24,
+        "end": 57
+      }
+    ],
+    "categories": [
+      {
+        "id": 1772201928880,
+        "type": "Preguntas Introductorias (Personales y del hogar)",
+        "value": "Perfil_demográfico",
+        "text": "¿Hay algo en particular",
+        "start": 0,
+        "end": 23
+      },
+      {
+        "id": 1772201935504,
+        "type": "Arraigo al lugar e identidad",
+        "value": "Relaciones_sociales_territorio",
+        "text": "que le haya afectado últimamente?",
+        "start": 24,
+        "end": 57
+      }
+    ],
+    "entities": []
   },
   "6": {
-    "line": "I_3: El trabajo, sobre todo. Mucha presión y poco descanso.",
+    "line": "I_2: El trabajo, sobre todo. Mucha presión y poco descanso.",
     "Interviewer": false,
     "attributes": [],
-    "categories": []
+    "categories": [
+      {
+        "id": 1772201944320,
+        "type": "Preguntas Introductorias (Personales y del hogar)",
+        "value": "Perfil_demográfico",
+        "text": "El trabajo, sobre todo. Mucha presión y poco descanso.",
+        "start": 0,
+        "end": 54
+      }
+    ],
+    "entities": [
+      {
+        "id": 1772201947256,
+        "type": "org",
+        "value": "org",
+        "text": "Mucha ",
+        "start": 24,
+        "end": 30
+      }
+    ]
   },
   "7": {
-    "line": "E_4: ¿Cómo suele manejar ese tipo de situaciones?",
+    "line": "E_2: ¿Cómo suele manejar ese tipo de situaciones?",
     "Interviewer": true,
     "attributes": [],
-    "categories": []
+    "categories": [],
+    "entities": []
   },
   "8": {
-    "line": "I_4: Intento mantener la calma y organizarme mejor, aunque no siempre es fácil.",
+    "line": "I_1: Intento mantener la calma y organizarme mejor, aunque no siempre es fácil.",
     "Interviewer": false,
     "attributes": [],
-    "categories": []
+    "categories": [],
+    "entities": []
   },
   "9": {
-    "line": "E_5: ¿Diría que ahora mismo se siente satisfecho con su situación?",
+    "line": "E_2: ¿Diría que ahora mismo se siente satisfecho con su situación?",
     "Interviewer": true,
     "attributes": [],
-    "categories": []
+    "categories": [],
+    "entities": []
   },
   "10": {
-    "line": "I_5: En parte sí, pero sé que todavía hay cosas que debo mejorar.",
+    "line": "I_2: En parte sí, pero sé que todavía hay cosas que debo",
     "Interviewer": false,
     "attributes": [],
-    "categories": []
+    "categories": [],
+    "entities": []
+  },
+  "11": {
+    "line": "I_2: En parte sí, pero sé que todavía hay cosas que debo",
+    "Interviewer": false,
+    "attributes": [],
+    "categories": [],
+    "entities": []
+  },
+  "12": {
+    "line": "I_2: En parte sí, pero sé que todavía hay cosas que debo",
+    "Interviewer": false,
+    "attributes": [],
+    "categories": [],
+    "entities": []
+  },
+  "13": {
+    "line": "I_2: En parte sí, pero sé que todavía hay cosas que debo",
+    "Interviewer": false,
+    "attributes": [],
+    "categories": [],
+    "entities": []
+  },
+  "14": {
+    "line": "I_2: En parte sí, pero sé que todavía hay cosas que debo",
+    "Interviewer": false,
+    "attributes": [],
+    "categories": [],
+    "entities": []
+  },
+  "15": {
+    "line": "I_2: En parte sí, pero sé que todavía hay cosas que debo",
+    "Interviewer": false,
+    "attributes": [],
+    "categories": [],
+    "entities": []
   }
 }
