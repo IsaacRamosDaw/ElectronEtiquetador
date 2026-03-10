@@ -2,7 +2,14 @@ import fs from 'fs';
 import path from 'path';
 
 import { dialog } from 'electron';
-import { getModelsPath } from './paths.js';
+import { getModelsPath, getDataPath } from './paths.js';
+
+//* Lista de sesiones (JSON de transcripciones ya procesadas)
+export const getSessionsList = () => {
+  const dataPath = getDataPath();
+  if (!fs.existsSync(dataPath)) return [];
+  return fs.readdirSync(dataPath).filter(file => file.endsWith('.json'));
+};
 
 //* Lista de modelos para elegir
 export const getModelsList = () => {
@@ -39,6 +46,34 @@ export const importModel = async (mainWindow) => {
     return { success: true, fileName };
   } catch (error) {
     console.error("Error importing model:", error);
+    return { success: false, error: error.message };
+  }
+};
+
+//* Importar sesión JSON (transcripción ya procesada)
+export const importSession = async (mainWindow) => {
+  const { getDataPath } = await import('./paths.js'); // Import dinámico para evitar posibles problemas de carga circular
+  const dataPath = getDataPath();
+
+  const { canceled, filePaths } = await dialog.showOpenDialog(mainWindow, {
+    title: 'Seleccionar sesión JSON',
+    filters: [{ name: 'JSON Files', extensions: ['json'] }],
+    properties: ['openFile']
+  });
+
+  if (canceled || filePaths.length === 0) {
+    return { success: false, canceled: true };
+  }
+
+  const sourcePath = filePaths[0];
+  const fileName = path.basename(sourcePath);
+  const destPath = path.join(dataPath, fileName);
+
+  try {
+    fs.copyFileSync(sourcePath, destPath);
+    return { success: true, fileName };
+  } catch (error) {
+    console.error("Error importing session:", error);
     return { success: false, error: error.message };
   }
 };

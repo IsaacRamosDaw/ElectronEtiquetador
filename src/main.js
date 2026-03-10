@@ -1,8 +1,8 @@
 import { app, BrowserWindow, ipcMain, dialog } from 'electron';
 
-import { getModelsList, importModel } from './main/launcher.js';
+import { getModelsList, importModel, importSession, getSessionsList } from './main/launcher.js';
 import { saveModel, getModel, getModelToEdit, deleteModel } from './main/createModel.js';
-import { prepareText, getJsonData, saveCurrentProgress, exportToHtml } from './main/tagger.js';
+import { prepareText, getJsonData, saveCurrentProgress, exportToHtml, exportToJson } from './main/tagger.js';
 
 import path from 'node:path';
 import started from 'electron-squirrel-startup';
@@ -44,6 +44,8 @@ app.on('window-all-closed', () => {
 //! Launcher view
 ipcMain.handle('getAllModels', async () => { return getModelsList(); });
 
+ipcMain.handle('getAllSessions', async () => { return getSessionsList(); });
+
 ipcMain.handle('importModel', async () => {
   const mainWindow = BrowserWindow.getFocusedWindow();
   return importModel(mainWindow);
@@ -51,6 +53,11 @@ ipcMain.handle('importModel', async () => {
 
 ipcMain.handle('deleteModel', async (_event, modelName) => {
   return deleteModel(modelName);
+});
+
+ipcMain.handle('importSession', async () => {
+  const mainWindow = BrowserWindow.getFocusedWindow();
+  return importSession(mainWindow);
 });
 
 //! CreateModel View
@@ -115,4 +122,23 @@ ipcMain.handle('exportToTxt', async (_event, fileName, txtContent) => {
   }
 
   return exportToHtml(filePath, txtContent);
+});
+
+ipcMain.handle('exportToJson', async (_event, fileName, data) => {
+  const mainWindow = BrowserWindow.getFocusedWindow();
+
+  const { filePath, canceled } = await dialog.showSaveDialog(mainWindow, {
+    title: 'Exportar Sesión a JSON',
+    defaultPath: fileName, // fileName ya incluye el .json en el TaggerView
+    filters: [
+      { name: 'Archivos JSON', extensions: ['json'] },
+      { name: 'Todos los archivos', extensions: ['*'] }
+    ]
+  });
+
+  if (canceled || !filePath) {
+    return { success: false, error: 'Exportación cancelada', canceled: true };
+  }
+
+  return exportToJson(filePath, data);
 });

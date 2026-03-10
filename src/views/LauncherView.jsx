@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
+
 import { removeExtension } from '../utils/utils.js'
 
 import "../style/launcherView.css"
@@ -7,12 +8,15 @@ import "../style/launcherView.css"
 export default function LauncherView() {
   const navigate = useNavigate();
 
-  //* Archivo seleccionado en el input del file
+  //* Archivo seleccionado en el input del file 
+  // dsjfkñsdjafkji
   const [fileSelected, setFileSelected] = useState(null);
-  //* Modelos añadidos en el input del select
+  //* Modelos seleccionados
   const [models, setModels] = useState([]);
-  //* Modelo seleccionado en el select
   const [selectedModel, setSelectedModel] = useState("");
+  //* Sesiones disponibles (JSON)
+  const [sessions, setSessions] = useState([]);
+  const [selectedSession, setSelectedSession] = useState("");
 
   //! ARCHIVO TXT
   //* Añadir un txt
@@ -35,15 +39,26 @@ export default function LauncherView() {
   //* Cargar modelos al select
   const fetchModels = async () => {
     try {
-      const models = await window.launcherAPI.getAllModels();
-      setModels(models);
+      const res = await window.launcherAPI.getAllModels();
+      setModels(res);
     } catch (error) {
       console.error("Error al obtener modelos:", error);
     }
   };
 
+  //* Cargar sesiones al select
+  const fetchSessions = async () => {
+    try {
+      const res = await window.launcherAPI.getAllSessions();
+      setSessions(res);
+    } catch (error) {
+      console.error("Error al obtener sesiones:", error);
+    }
+  };
+
   useEffect(() => {
     fetchModels();
+    fetchSessions(); //? Carga también las sesiones existentes
   }, [])
 
   //* Importar modelo
@@ -88,28 +103,46 @@ export default function LauncherView() {
   //! ETIQUETADO
   //* Manejador para iniciar el etiquetado { Navega a TaggerView }
   const handleStartTagging = async () => {
-    if (!fileSelected || !selectedModel) {
-      alert("Selecciona un archivo y un modelo primero");
+    //? Caso 1: Se ha seleccionado una sesión JSON existente
+    if (selectedSession && selectedModel) {
+      const cleanFileName = selectedSession.replace('.json', '');
+      const cleanModelName = removeExtension(selectedModel);
+      navigate(`/tagger/${cleanFileName}/${cleanModelName}`);
       return;
     }
 
-    try {
-      const result = await window.taggingAPI.prepareText(fileSelected.name, fileSelected.content);
-
-      if (result.success) {
-
-        const cleanFileName = result.fileName.replace('.json', '');
-        const cleanModelName = removeExtension(selectedModel);
-
-        navigate(`/tagger/${cleanFileName}/${cleanModelName}`);
-      } else {
-        alert("Error al preparar la sesión: " + result.error);
+    //? Caso 2: Se ha seleccionado un TXT nuevo
+    if (fileSelected && selectedModel) {
+      try {
+        const result = await window.taggingAPI.prepareText(fileSelected.name, fileSelected.content);
+        if (result.success) {
+          const cleanFileName = result.fileName.replace('.json', '');
+          const cleanModelName = removeExtension(selectedModel);
+          navigate(`/tagger/${cleanFileName}/${cleanModelName}`);
+        } else {
+          alert("Error al preparar la sesión: " + result.error);
+        }
+      } catch (error) {
+        console.error("Error en el proceso de etiquetado:", error);
       }
-    } catch (error) {
-      console.error("Error en el proceso de etiquetado:", error);
+      return;
     }
+
+    alert("Selecciona un archivo (o sesión) y un modelo primero");
   };
 
+
+  //* Importar sesión JSON
+  const handleImportSession = async () => {
+    const res = await window.launcherAPI.importSession();
+    if (res.success) {
+      await fetchSessions(); //? Refresca la lista
+      setSelectedSession(res.fileName); //? La selecciona automáticamente
+      setFileSelected(null); //? Deselecciona el TXT para evitar confusiones
+    } else if (!res.canceled) {
+      alert("Error al importar sesión: " + res.error);
+    }
+  };
 
   return (
     <div className="launcher-view">
@@ -120,20 +153,31 @@ export default function LauncherView() {
       <div className="glass-panel">
         <main className="launcher-grid">
           <section className="config-card">
-            <div className="card-icon blue-glow">📁</div>
-            <div className="file-input-wrapper">
-              <label htmlFor="txt-upload" className="custom-file-upload">
-                {fileSelected ? '📂 Cambiar archivo' : '📁 Seleccionar TXT'}
-              </label>
-              <input
-                id="txt-upload"
-                type="file"
-                accept=".txt"
-                onChange={addFile}
-                style={{ display: 'none' }}
-              />
-              {fileSelected && <span className="file-name">{fileSelected.name}</span>}
-            </div>
+            <div className="card-icon blue-glow">📂</div>
+            <h3>Entrevista (.txt)</h3>
+            <label className="custom-file-upload">
+              <input type="file" accept=".txt" onChange={(e) => { addFile(e); setSelectedSession(""); }} style={{ display: 'none' }} />
+              Seleccionar Archivo
+            </label>
+            <span className="file-name">{fileSelected ? fileSelected.name : "Ningún archivo seleccionado"}</span>
+            
+            <div className="divider">o</div>
+            
+            <h3>Continuar Sesión (.json)</h3>
+            <select 
+              className="neon-select" 
+              value={selectedSession} 
+              onChange={(e) => { setSelectedSession(e.target.value); setFileSelected(null); }}
+            >
+              <option value="">-- {sessions.length > 0 ? 'Seleccionar Sesión' : 'No hay sesiones'} --</option>
+              {sessions.map((s, i) => (
+                <option key={i} value={s}>{removeExtension(s)}</option>
+              ))}
+            </select>
+
+            <button className="link-btn-alt" onClick={handleImportSession} style={{ width: '100%', padding: '10px', marginTop: '10px' }}>
+              📥 Importar Sesión Externa
+            </button>
           </section>
 
           <section className="config-card">
@@ -178,8 +222,8 @@ export default function LauncherView() {
 
         <footer>
           <button
-            className={`btn-main-action ${(fileSelected && selectedModel) ? 'active' : 'disabled'}`}
-            disabled={!fileSelected || !selectedModel}
+            className={`btn-main-action ${( (fileSelected || selectedSession) && selectedModel) ? 'active' : 'disabled'}`}
+            disabled={(!fileSelected && !selectedSession) || !selectedModel}
             onClick={handleStartTagging}
           >
             Etiquetar

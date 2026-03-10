@@ -8,6 +8,8 @@ contextBridge.exposeInMainWorld('launcherAPI', {
   getAllModels: () => ipcRenderer.invoke('getAllModels'),
   importModel: () => ipcRenderer.invoke('importModel'),
   deleteModel: (name) => ipcRenderer.invoke('deleteModel', name),
+  importSession: () => ipcRenderer.invoke('importSession'),
+  getAllSessions: () => ipcRenderer.invoke('getAllSessions'),
 });
 
 //! Create model view
@@ -33,5 +35,6 @@ contextBridge.exposeInMainWorld('taggingAPI', {
   updateLineTags: (fileName, data) => ipcRenderer.invoke('updateLineTags', fileName, data),
   saveCurrentProgress: (fileName, data) => ipcRenderer.invoke('saveCurrentProgress', fileName, data),
   exportToHtml: (fileName, htmlContent) => ipcRenderer.invoke('exportToHtml', fileName, htmlContent),
-  exportToTxt: (fileName, txtContent) => ipcRenderer.invoke('exportToTxt', fileName, txtContent)
+  exportToTxt: (fileName, txtContent) => ipcRenderer.invoke('exportToTxt', fileName, txtContent),
+  exportToJson: (fileName, data) => ipcRenderer.invoke('exportToJson', fileName, data)
 });

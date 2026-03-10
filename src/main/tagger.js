@@ -34,6 +34,16 @@ export const prepareText = (fileName, textContent) => {
   }
 };
 
+export const exportToJson = (filePath, data) => {
+  try {
+    fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf-8');
+    return { success: true, filePath };
+  } catch (error) {
+    console.error("Error exportando JSON:", error);
+    return { success: false, error: error.message };
+  }
+};
+
 export const getJsonData = (fileName) => {
   const filePath = path.join(getDataPath(), `${fileName}.json`);
   if (fs.existsSync(filePath)) {
