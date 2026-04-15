@@ -2,12 +2,14 @@ import fs from 'fs';
 import path from 'path';
 import { getDataPath } from './paths.js';
 
-export const prepareText = (fileName, textContent) => {
+export const prepareText = (fileName, textContent, projectName = null) => {
   if (!textContent) {
     throw new Error("El contenido del texto está vacío o no se recibió correctamente.");
   }
 
-  const dataPath = getDataPath();
+  const dataPath = projectName ? path.join(getDataPath(), projectName) : getDataPath();
+  if (!fs.existsSync(dataPath)) fs.mkdirSync(dataPath, { recursive: true });
+
   const lines = textContent.split(/\r?\n/).filter(line => line.trim() !== '');
   const structuredData = {};
 
@@ -44,8 +46,9 @@ export const exportToJson = (filePath, data) => {
   }
 };
 
-export const getJsonData = (fileName) => {
-  const filePath = path.join(getDataPath(), `${fileName}.json`);
+export const getJsonData = (fileName, projectName = null) => {
+  const dataPath = projectName ? path.join(getDataPath(), projectName) : getDataPath();
+  const filePath = path.join(dataPath, `${fileName}.json`);
   if (fs.existsSync(filePath)) {
     const content = fs.readFileSync(filePath, 'utf-8');
     return JSON.parse(content);
@@ -53,8 +56,9 @@ export const getJsonData = (fileName) => {
   return null;
 };
 
-export const saveCurrentProgress = (fileName, data) => {
-  const filePath = path.join(getDataPath(), `${fileName}.json`);
+export const saveCurrentProgress = (fileName, data, projectName = null) => {
+  const dataPath = projectName ? path.join(getDataPath(), projectName) : getDataPath();
+  const filePath = path.join(dataPath, `${fileName}.json`);
   fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf-8');
   return { success: true };
 };

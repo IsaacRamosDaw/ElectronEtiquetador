@@ -13,6 +13,13 @@ const getBaseDataPath = () => {
   return dataPath;
 };
 
+//* Ruta de los datos de las sesiones ("%appdata%/etiquetador-data/data")
+export const getDataPath = () => {
+  const sessionDataPath = path.join(getBaseDataPath(), 'data');
+  if (!fs.existsSync(sessionDataPath)) { fs.mkdirSync(sessionDataPath, { recursive: true }); }
+  return sessionDataPath;
+};
+
 //* Ruta de los modelos ("%appdata%/etiquetador-data/models")
 export const getModelsPath = () => {
   const modelsPath = path.join(getBaseDataPath(), 'models');
@@ -22,11 +29,11 @@ export const getModelsPath = () => {
   return modelsPath;
 };
 
-//* Ruta de los datos de las sesiones ("%appdata%/etiquetador-data/data")
-export const getDataPath = () => {
-  const sessionDataPath = path.join(getBaseDataPath(), 'data');
-  if (!fs.existsSync(sessionDataPath)) { fs.mkdirSync(sessionDataPath, { recursive: true }); }
-  return sessionDataPath;
+//* Ruta de un proyecto específico ("%appdata%/etiquetador-data/data/:projectName")
+export const getProjectPath = (projectName) => {
+  const projectPath = path.join(getDataPath(), projectName);
+  if (!fs.existsSync(projectPath)) { fs.mkdirSync(projectPath, { recursive: true }); }
+  return projectPath;
 };
 
 //* Ruta de las transcripciones ("%appdata%/etiquetador-data/transcriptions")

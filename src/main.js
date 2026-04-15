@@ -1,6 +1,6 @@
 import { app, BrowserWindow, ipcMain, dialog } from 'electron';
 
-import { getModelsList, importModel, importSession, getSessionsList } from './main/launcher.js';
+import { getModelsList, importModel, importSession, getSessionsList, getProjectsList, createProject, deleteProject as deleteProjectDir } from './main/launcher.js';
 import { saveModel, getModel, getModelToEdit, deleteModel } from './main/createModel.js';
 import { prepareText, getJsonData, saveCurrentProgress, exportToHtml, exportToJson } from './main/tagger.js';
 
@@ -42,22 +42,22 @@ app.on('window-all-closed', () => {
 });
 
 //! Launcher view
+ipcMain.handle('getProjects', async () => { return getProjectsList(); });
+ipcMain.handle('deleteProject', async (_event, name) => { return deleteProjectDir(name); });
+ipcMain.handle('createProject', async (_event, name) => { return createProject(name); });
+
 ipcMain.handle('getAllModels', async () => { return getModelsList(); });
+ipcMain.handle('importModel', async () => { const mainWindow = BrowserWindow.getFocusedWindow(); return importModel(mainWindow); });
+ipcMain.handle('deleteModel', async (_event, modelName) => { return deleteModel(modelName); });
 
-ipcMain.handle('getAllSessions', async () => { return getSessionsList(); });
+ipcMain.handle('getAllSessions', async (_event, projectName) => { return getSessionsList(projectName); });
 
-ipcMain.handle('importModel', async () => {
+
+
+
+ipcMain.handle('importSession', async (_event, projectName) => {
   const mainWindow = BrowserWindow.getFocusedWindow();
-  return importModel(mainWindow);
-});
-
-ipcMain.handle('deleteModel', async (_event, modelName) => {
-  return deleteModel(modelName);
-});
-
-ipcMain.handle('importSession', async () => {
-  const mainWindow = BrowserWindow.getFocusedWindow();
-  return importSession(mainWindow);
+  return importSession(mainWindow, projectName);
 });
 
 //! CreateModel View
@@ -74,16 +74,16 @@ ipcMain.handle('saveModel', async (_event, modelData) => {
 });
 
 //! Tagger View
-ipcMain.handle('prepareText', async (_event, fileName, textContent) => {
-  return prepareText(fileName, textContent);
+ipcMain.handle('prepareText', async (_event, fileName, textContent, projectName) => {
+  return prepareText(fileName, textContent, projectName);
 });
 
-ipcMain.handle('getJsonData', async (_event, fileName) => {
-  return getJsonData(fileName);
+ipcMain.handle('getJsonData', async (_event, fileName, projectName) => {
+  return getJsonData(fileName, projectName);
 });
 
-ipcMain.handle('saveCurrentProgress', async (_event, fileName, data) => {
-  return saveCurrentProgress(fileName, data);
+ipcMain.handle('saveCurrentProgress', async (_event, fileName, data, projectName) => {
+  return saveCurrentProgress(fileName, data, projectName);
 });
 
 ipcMain.handle('exportToHtml', async (_event, fileName, htmlContent) => {

@@ -11,7 +11,7 @@ import { generateHtmlReport } from '../utils/htmlExporter.js';
 // 
 export default function TaggerView() {
 	//* Parámetros de la URL y navegación
-	const { fileName, modelName } = useParams();
+	const { projectName, fileName, modelName } = useParams();
 	const navigate = useNavigate();
 
 	//* ESTADOS DE LA VISTA
@@ -36,14 +36,14 @@ export default function TaggerView() {
 	useEffect(() => {
 		async function loadData() {
 			//? Obtiene el JSON del texto procesado y el JSON del modelo de etiquetas
-			const interviewRes = await window.taggingAPI.getJsonData(fileName);
+			const interviewRes = await window.taggingAPI.getJsonData(fileName, projectName);
 			const modelRes = await window.createModelAPI.getModelToEdit(modelName);
 
 			if (interviewRes) setData(interviewRes);
 			if (modelRes.success) setModel(modelRes.data);
 		}
 		loadData();
-	}, [fileName, modelName]);
+	}, [fileName, modelName, projectName]);
 
 	//* Captura el texto seleccionado con el ratón
 	const handleSelection = () => {
@@ -103,7 +103,7 @@ export default function TaggerView() {
 
 	//* Guarda el progreso actual y muestra una notificación
 	const handleSaveSession = async () => {
-		const res = await window.taggingAPI.saveCurrentProgress(fileName, data);
+		const res = await window.taggingAPI.saveCurrentProgress(fileName, data, projectName);
 		if (res.success) {
 			setShowSaveToast(true);
 			//? Oculta la notificación después de 3 segundos

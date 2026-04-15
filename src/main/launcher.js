@@ -1,14 +1,58 @@
 import fs from 'fs';
 import path from 'path';
-
 import { dialog } from 'electron';
 import { getModelsPath, getDataPath } from './paths.js';
 
-//* Lista de sesiones (JSON de transcripciones ya procesadas)
-export const getSessionsList = () => {
+//* Lista de proyectos (carpetas dentro de data)
+export const getProjectsList = () => {
   const dataPath = getDataPath();
+
   if (!fs.existsSync(dataPath)) return [];
-  return fs.readdirSync(dataPath).filter(file => file.endsWith('.json'));
+
+  // Devuelve un array sucio con todos los archivos
+  return fs.readdirSync(dataPath).filter(file => {
+    // Hacemos un filter para quedarnos solo con las carpetas
+    return fs.statSync(path.join(dataPath, file)).isDirectory();
+    // Devuleve un array de nombres de carpetas
+  });
+};
+
+//* Crear un nuevo proyecto
+export const createProject = (projectName) => {
+  const projectPath = path.join(getDataPath(), projectName);
+
+  if (!fs.existsSync(projectPath)) {
+    fs.mkdirSync(projectPath, { recursive: true });
+    return { success: true };
+  }
+
+  return { success: false, error: "El proyecto ya existe" };
+};
+
+//* Eliminar un proyecto
+export const deleteProject = (projectName) => {
+  const projectPath = path.join(getDataPath(), projectName);
+
+  try {
+    // Si existe la carpeta
+    if (fs.existsSync(projectPath)) {
+      // La elimina
+      fs.rmSync(projectPath, { recursive: true, force: true });
+      return { success: true };
+    }
+
+    return { success: false, error: "El proyecto no existe" };
+
+  } catch (error) {
+    return { success: false, error: error.message };
+  }
+};
+
+//* Lista de sesiones (JSON de transcripciones ya procesadas)
+export const getSessionsList = (projectName = null) => {
+  const dataPath = projectName ? path.join(getDataPath(), projectName) : getDataPath();
+  if (!fs.existsSync(dataPath)) return [];
+  return fs.readdirSync(dataPath).filter(file => file.endsWith('.json') && fs.statSync(path.join(dataPath, file)).isFile());
 };
 
 //* Lista de modelos para elegir
@@ -51,9 +95,10 @@ export const importModel = async (mainWindow) => {
 };
 
 //* Importar sesión JSON (transcripción ya procesada)
-export const importSession = async (mainWindow) => {
-  const { getDataPath } = await import('./paths.js'); // Import dinámico para evitar posibles problemas de carga circular
-  const dataPath = getDataPath();
+export const importSession = async (mainWindow, projectName = null) => {
+  const { getDataPath } = await import('./paths.js'); 
+  const dataPath = projectName ? path.join(getDataPath(), projectName) : getDataPath();
+  if (!fs.existsSync(dataPath)) fs.mkdirSync(dataPath, { recursive: true });
 
   const { canceled, filePaths } = await dialog.showOpenDialog(mainWindow, {
     title: 'Seleccionar sesión JSON',
